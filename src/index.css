@@ -1,0 +1,253 @@
+@import "tailwindcss";
+
+:root {
+  --bg-dark: #f6f6f9;
+  --bg-slate: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.65);
+  --bg-input: #ededf2;
+  
+  --zinc-950: #ffffff;
+  --zinc-900: #e2e2e9;
+  --zinc-850: #d8d8e5;
+  --zinc-800: #c5c5d6;
+  --zinc-750: #b0b0c5;
+  --zinc-700: #7a7a93;
+  
+  --text-white: #050508;
+  --text-300: #1c1c24;
+  --text-400: #5c5c70;
+  --text-500: #8d8da3;
+}
+
+.dark {
+  --bg-dark: #040406;
+  --bg-slate: #09090c;
+  --bg-card: rgba(12, 12, 16, 0.65);
+  --bg-input: #14141c;
+  
+  --zinc-950: #020203;
+  --zinc-900: #08080b;
+  --zinc-850: #15151e;
+  --zinc-800: #22222f;
+  --zinc-750: #333346;
+  --zinc-700: #55556e;
+  
+  --text-white: #ffffff;
+  --text-300: #e5e5ec;
+  --text-400: #9e9eb4;
+  --text-500: #66667a;
+}
+
+@theme {
+  --color-lesnar-dark: var(--bg-dark);
+  --color-lesnar-slate: var(--bg-slate);
+  --color-lesnar-card: var(--bg-card);
+  --color-lesnar-input: var(--bg-input);
+  
+  --color-zinc-950: var(--zinc-950);
+  --color-zinc-900: var(--zinc-900);
+  --color-zinc-850: var(--zinc-850);
+  --color-zinc-800: var(--zinc-800);
+  --color-zinc-750: var(--zinc-750);
+  --color-zinc-700: var(--zinc-700);
+  
+  --color-zinc-300: var(--text-300);
+  --color-zinc-400: var(--text-400);
+  --color-zinc-500: var(--text-500);
+  
+  --color-lesnar-red: #e51b23;
+  --color-lesnar-red-hover: #ff2a30;
+  --color-lesnar-gold: #ff9500;
+  --color-lesnar-green: #30d158;
+  
+  --font-display: "Montserrat", sans-serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-dark);
+    color: var(--text-300);
+    @apply font-sans antialiased min-h-screen;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+}
+
+/* Glassmorphism Panel styles */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+.dark .glass-panel {
+  background: rgba(12, 12, 16, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.glass-panel-hover {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-hover:hover {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(229, 27, 35, 0.2);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+.dark .glass-panel-hover:hover {
+  background: rgba(18, 18, 26, 0.75);
+  border-color: rgba(229, 27, 35, 0.25);
+  box-shadow: 0 8px 30px rgba(229, 27, 35, 0.08);
+}
+
+/* Premium radial glow backgrounds */
+.radial-glow-top {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 400px;
+  background: radial-gradient(circle at 50% 0%, rgba(229, 27, 35, 0.05) 0%, rgba(229, 27, 35, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+  transition: background 0.4s ease;
+}
+
+.dark .radial-glow-top {
+  background: radial-gradient(circle at 50% 0%, rgba(229, 27, 35, 0.12) 0%, rgba(229, 27, 35, 0) 70%);
+}
+
+.radial-glow-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 300px;
+  background: radial-gradient(circle at 50% 100%, rgba(229, 27, 35, 0.03) 0%, rgba(229, 27, 35, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+  transition: background 0.4s ease;
+}
+
+.dark .radial-glow-bottom {
+  background: radial-gradient(circle at 50% 100%, rgba(229, 27, 35, 0.06) 0%, rgba(229, 27, 35, 0) 70%);
+}
+
+/* Premium Buttons */
+.btn-premium {
+  background: linear-gradient(135deg, #e51b23 0%, #b20e14 100%);
+  box-shadow: 0 4px 15px rgba(229, 27, 35, 0.35);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-premium:hover {
+  background: linear-gradient(135deg, #ff2a30 0%, #cc1218 100%);
+  box-shadow: 0 6px 20px rgba(229, 27, 35, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-premium:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(229, 27, 35, 0.25);
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(14, 14, 20, 0.03);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(229, 27, 35, 0.4);
+  border-radius: 99px;
+  transition: background 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(229, 27, 35, 0.7);
+}
+
+/* Keep text white on red backgrounds */
+.bg-lesnar-red,
+.bg-lesnar-red *,
+.from-lesnar-red,
+.from-lesnar-red * {
+  color: #ffffff !important;
+}
+
+/* Active text overrides for dark/light values */
+.text-white {
+  color: var(--text-white) !important;
+  transition: color 0.4s ease;
+}
+
+.border-zinc-900, .border-zinc-850, .border-zinc-800, .border-zinc-750 {
+  border-color: var(--zinc-850) !important;
+  transition: border-color 0.4s ease;
+}
+
+/* Active set item pulse */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(229, 27, 35, 0.2);
+    border-color: rgba(229, 27, 35, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(229, 27, 35, 0.55);
+    border-color: rgba(229, 27, 35, 0.7);
+  }
+}
+
+.active-set-glow {
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+/* Dialog styles */
+dialog[open] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+}
+
+dialog {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: 
+    opacity 0.3s ease-out, 
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+    display 0.3s allow-discrete, 
+    overlay 0.3s allow-discrete;
+  transition-behavior: allow-discrete;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  transition: 
+    display 0.3s allow-discrete, 
+    overlay 0.3s allow-discrete, 
+    background-color 0.3s ease-out,
+    backdrop-filter 0.3s ease-out;
+  transition-behavior: allow-discrete;
+}
+
+dialog[open]::backdrop {
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(6px);
+
+  @starting-style {
+    background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+  }
+}
