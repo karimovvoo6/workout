@@ -37,7 +37,7 @@ export const App: React.FC = () => {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem('app-theme');
     if (saved === 'light' || saved === 'dark') return saved;
-    return 'dark'; // По умолчанию темная тема UFC
+    return 'dark';
   });
 
   // Эффект для применения темы к documentElement
@@ -99,7 +99,6 @@ export const App: React.FC = () => {
   const handleStartSession = (dayId: number) => {
     let currentActive = activeWorkout;
 
-    // Если сессии нет или это другой день, инициализируем
     if (!currentActive || currentActive.dayId !== dayId) {
       currentActive = {
         dayId,
@@ -157,7 +156,7 @@ export const App: React.FC = () => {
     saveActiveWorkout(null);
     setActiveWorkoutMode(false);
     setSelectedDayId(null);
-    setActiveTab('progress'); // Перенаправляем на прогресс
+    setActiveTab('progress');
   };
 
   // Сброс всех данных атлета
@@ -178,7 +177,6 @@ export const App: React.FC = () => {
 
   // Отрисовка активного экрана
   const renderContent = () => {
-    // В активном режиме тренировки рендерим только его
     if (activeWorkoutMode && activeWorkout && selectedDayId !== null) {
       const day = WORKOUT_DATABASE.find(d => d.id === selectedDayId);
       if (day) {
@@ -214,7 +212,6 @@ export const App: React.FC = () => {
           onBack={() => setSelectedDayId(null)}
           onStartSession={handleStartSession}
           onSelectExercise={(ex) => {
-            // Открыть упражнение можно в любое время для просмотра/редактирования
             setActiveExercise(ex);
           }}
         />
@@ -252,7 +249,7 @@ export const App: React.FC = () => {
 
   return (
     <div className="flex justify-center min-h-screen bg-lesnar-dark w-full overflow-x-hidden relative">
-      {/* Фоновые градиенты Брока Леснара */}
+      {/* Фоновые градиенты */}
       <div className="radial-glow-top"></div>
       <div className="radial-glow-bottom"></div>
       
@@ -262,11 +259,8 @@ export const App: React.FC = () => {
         
         {/* Хедер приложения */}
         <header className="py-5 px-5 text-center border-b border-zinc-900/60 bg-zinc-950/75 sticky top-0 backdrop-blur-lg z-40 relative">
-          <div className="text-[9px] font-black text-lesnar-red tracking-[0.25em] uppercase mb-0.5">
-            Сила и масса в стиле Брока Леснара
-          </div>
-          <h1 className="font-display font-black italic text-2xl text-white tracking-tight leading-none">
-            СИЛОВОЙ ТРЕНЕР
+          <h1 className="font-display font-black italic text-2xl text-white tracking-tight leading-none uppercase">
+            ТРЕНИРОВКА
           </h1>
           <button
             onClick={() => setTheme(prev => prev === 'dark' ? 'light' : 'dark')}
@@ -297,7 +291,7 @@ export const App: React.FC = () => {
         {/* Таб-бар */}
         {!activeExercise && !activeWorkoutMode && (
           <TabBar activeTab={activeTab} setActiveTab={(tab) => {
-            setSelectedDayId(null); // Сбрасываем выбранный день при переключении табов
+            setSelectedDayId(null);
             setActiveTab(tab);
           }} />
         )}
@@ -305,7 +299,6 @@ export const App: React.FC = () => {
       </div>
     </div>
   );
-
 };
 
 export default App;

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Calendar } from '../components/Calendar';
-import { WORKOUT_DATABASE, MOTIVATIONS } from '../data/workoutData';
-import { Award, ShieldAlert } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { WORKOUT_DATABASE } from '../data/workoutData';
+import { Award } from 'lucide-react';
+import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 
 interface ActiveWorkout {
@@ -59,68 +59,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
       someDate.getFullYear() === today.getFullYear();
   };
 
-  // Состояние для текущей цитаты
-  const [currentQuote, setCurrentQuote] = useState(() => {
-    return MOTIVATIONS[Math.floor(Math.random() * MOTIVATIONS.length)];
-  });
-
-  // Каждые 5 минут выбираем новую случайную цитату
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentQuote(prev => {
-        let nextQuote = prev;
-        while (nextQuote === prev && MOTIVATIONS.length > 1) {
-          nextQuote = MOTIVATIONS[Math.floor(Math.random() * MOTIVATIONS.length)];
-        }
-        return nextQuote;
-      });
-    }, 5 * 60 * 1000); // 5 минут в миллисекундах
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div className="flex flex-col gap-6.5 w-full pb-6 relative z-10">
-      
-      {/* Мощный Hero-блок с мотивацией Брока Леснара */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.45, ease: "easeOut" }}
-        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-zinc-950 to-zinc-900 border border-zinc-800/80 p-5.5 flex flex-col gap-3 shadow-2xl min-h-[140px] justify-center"
-      >
-        <div className="absolute right-[-15px] bottom-[-25px] opacity-[0.04] select-none pointer-events-none text-white font-black italic text-8xl tracking-tighter">
-          BEAST
-        </div>
-        
-        <div className="flex items-center gap-1.5">
-          <ShieldAlert size={12} className="text-lesnar-red animate-pulse" />
-          <span className="text-[9px] font-black text-lesnar-red uppercase tracking-[0.25em] block">
-            BEAST MODE ON
-          </span>
-        </div>
-        
-        <AnimatePresence mode="wait">
-          <motion.blockquote 
-            key={currentQuote}
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -5 }}
-            transition={{ duration: 0.3 }}
-            className="font-display font-black italic text-md text-white tracking-tight uppercase leading-snug"
-          >
-            "{currentQuote}"
-          </motion.blockquote>
-        </AnimatePresence>
-        
-        <div className="flex items-center gap-1.5 mt-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-lesnar-red shadow-[0_0_8px_#e51b23]"></span>
-          <span className="text-[9px] font-black text-zinc-500 uppercase tracking-widest">
-            БРОК ЛЕСНАР
-          </span>
-        </div>
-      </motion.div>
-
       {/* Календарь тренировок */}
       <Calendar history={history} />
 

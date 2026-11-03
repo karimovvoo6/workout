@@ -22,7 +22,7 @@ export const AnatomicalModel: React.FC<AnatomicalModelProps> = ({
   return (
     <div className="flex flex-col items-center justify-center p-5 bg-white dark:bg-zinc-950/45 border border-zinc-200 dark:border-zinc-900 rounded-2xl w-full mx-auto shadow-md dark:shadow-2xl transition-colors duration-300 backdrop-blur-md">
       <div className="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-[0.2em] mb-4 text-center">
-        РАБОТАЮЩИЕ МЫШЦЫ (GYMVISUAL)
+        РАБОТАЮЩИЕ МЫШЦЫ
       </div>
 
       <div className="relative w-full max-w-[420px] aspect-[4/3] flex items-center justify-center overflow-hidden bg-zinc-900/30 dark:bg-zinc-950/20 rounded-xl border border-zinc-100/5 p-2">

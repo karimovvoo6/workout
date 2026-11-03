@@ -1,6 +1,8 @@
 import React from 'react';
+import { WORKOUT_DATABASE } from '../data/workoutData';
 
 interface HistoryItem {
+  dayId?: number;
   date: string;
   title: string;
   volume: number;
@@ -15,43 +17,29 @@ export const StatsCharts: React.FC<StatsChartsProps> = ({ history }) => {
   // Выбираем последние 7 тренировок для отображения графика объема
   const lastWorkouts = [...history].slice(0, 7).reverse();
 
-  // Расчет статистики по группам мышц на основе истории
-  const getMuscleStats = () => {
-    const counts: Record<string, number> = {
-      "Грудь": 0,
-      "Спина": 0,
-      "Плечи": 0,
-      "Ноги": 0,
-      "Бицепс": 0,
-      "Трицепс": 0
-    };
-
-    history.forEach(item => {
-      if (item.title.includes("Грудь")) {
-        counts["Грудь"] += 3;
-        counts["Трицепс"] += 2;
-      }
-      if (item.title.includes("Спина")) {
-        counts["Спина"] += 3;
-        counts["Бицепс"] += 3;
-      }
-      if (item.title.includes("Плечи")) {
-        counts["Плечи"] += 4;
-      }
-      if (item.title.includes("Ноги")) {
-        counts["Ноги"] += 4;
-      }
+  // Расчет статистики по 4 тренировочным дням программы
+  const getDaysStats = () => {
+    const dayCounts = WORKOUT_DATABASE.map(day => {
+      const count = history.filter(item => 
+        item.dayId === day.id || 
+        (item.title && item.title.toLowerCase().includes(day.title.toLowerCase()))
+      ).length;
+      return {
+        id: day.id,
+        title: day.title,
+        count
+      };
     });
 
-    const maxCount = Math.max(...Object.values(counts), 1);
-    return Object.entries(counts).map(([name, count]) => ({
-      name,
-      percentage: Math.round((count / maxCount) * 100),
-      count
+    const maxCount = Math.max(...dayCounts.map(d => d.count), 1);
+
+    return dayCounts.map(day => ({
+      ...day,
+      percentage: day.count === 0 ? 0 : Math.round((day.count / maxCount) * 100)
     }));
   };
 
-  const muscleStats = getMuscleStats();
+  const daysStats = getDaysStats();
 
   // Генерация SVG пути для графика
   const renderVolumeChart = () => {
@@ -157,17 +145,24 @@ export const StatsCharts: React.FC<StatsChartsProps> = ({ history }) => {
         </div>
       </div>
 
-      {/* Прогресс по группам мышц */}
+      {/* Прогресс по 4 дням программы */}
       <div className="glass-panel border-zinc-800/40 rounded-2xl p-5">
         <h3 className="font-display font-black text-xs uppercase text-white tracking-wider mb-3.5">
-          Приоритет мышечных групп
+          Прогресс по 4 дням
         </h3>
         <div className="flex flex-col gap-4">
-          {muscleStats.map(stat => (
-            <div key={stat.name} className="flex flex-col gap-1.5">
+          {daysStats.map(stat => (
+            <div key={stat.id} className="flex flex-col gap-1.5">
               <div className="flex justify-between items-center text-xs">
-                <span className="font-bold text-zinc-300">{stat.name}</span>
-                <span className="font-mono text-zinc-500 font-black text-[10px] uppercase tracking-wider">{stat.count} раунд.</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-black text-lesnar-red uppercase tracking-wider">
+                    День {stat.id}
+                  </span>
+                  <span className="font-bold text-zinc-300">{stat.title}</span>
+                </div>
+                <span className="font-mono text-zinc-500 font-black text-[10px] uppercase tracking-wider">
+                  {stat.count}
+                </span>
               </div>
               <div className="w-full h-2 bg-zinc-950/70 rounded-full overflow-hidden border border-zinc-900/60 p-[0.5px]">
                 <div

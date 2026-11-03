@@ -43,7 +43,7 @@ export const ExerciseAnimator: React.FC<ExerciseAnimatorProps> = ({ exerciseId }
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em] text-center mb-1">
-        Техника движения (GymVisual)
+        Техника движения
       </div>
       <div className="relative w-full aspect-video flex items-center justify-center bg-white border border-zinc-200 dark:border-zinc-800/80 rounded-2xl overflow-hidden shadow-inner p-2.5">
         {gifSrc ? (
